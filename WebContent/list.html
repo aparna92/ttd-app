@@ -14,6 +14,11 @@ base_url="http://localhost:8080/rest/ttd/";
 
 $(document).ready(function(){
 	
+	 function myFunction() {
+	    	console.log($('#del').val());
+	    }
+	    
+	
 
 	 $.getJSON("/rest/ttd",function(data1){
 		 var foo = data1.data[0];
@@ -47,10 +52,7 @@ $(document).ready(function(){
     });
     
     */
-    function myFunction() {
-    	console.log($('#del').val());
-    }
-    
+   
     
     function delData(id){
         $.ajax({
