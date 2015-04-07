@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -16,61 +17,54 @@ import javax.ws.rs.core.Response;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.Song;
+import model.ttd;
 import command.CreateSongCommand;
+import command.CreateTTD;
+import command.DeleteTTD;
 import command.GetSongCommand;
 import command.ListSongsCommand;
+import command.ListTTD;
 import command.UpdateSongCommand;
 import util.Constants;
 
-@Path("song")
+
+@Path("ttd")
 public class Services {
 	ObjectMapper mapper = new ObjectMapper();
 
-	// Browse all songs
+	// get all ttd
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response browseSongs(@QueryParam("offset") int offset,
+	public Response listall(@QueryParam("offset") int offset,
 			@QueryParam("count") int count) {
-		ListSongsCommand command = new ListSongsCommand();
-		ArrayList<Song> list = command.execute();
+		ListTTD command = new ListTTD();
+		ArrayList<ttd> list = command.execute();
 		HashMap<String, Object> hm = new HashMap<String, Object>();
 		hm.put(Constants.Pagination.DATA, list);
 		hm.put(Constants.Pagination.OFFSET, offset);
 		hm.put(Constants.Pagination.COUNT, count);
-		String songString = null;
+		String ttds = null;
 		try {
-			songString = mapper.writeValueAsString(hm);
+			ttds = mapper.writeValueAsString(hm);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Response.status(200).entity(songString).build();
+		return Response.status(200).entity(ttds).build();
 	}
 
-	// get song by Id
-	@GET
-	@Path("{id}")
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getSong(@PathParam("id") int id) {
-		GetSongCommand command = new GetSongCommand();
-		String songString = null;
-		try {
-			songString = mapper.writeValueAsString(command.execute(id));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return Response.status(200).entity(songString).build();
-	}
-
-	// Add a song
+	// add tht ttd
 	@POST
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Consumes({ MediaType.APPLICATION_JSON })
 	public Response createSongs(String payload) {
-		CreateSongCommand create = new CreateSongCommand();
-		Song s = null;
+		CreateTTD create = new CreateTTD();
+		ttd s = null;
 		String i = "";
 		try {
-			s = mapper.readValue(payload, Song.class);
+			s = mapper.readValue(payload, ttd.class);
+			
+			System.out.println(s.getTitle());
+			System.out.println(s.getDes());
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			Response.status(400).entity("could not read string").build();
@@ -83,29 +77,36 @@ public class Services {
 		}
 		return Response.status(200).entity(i).build();
 	}
-	// Update a song
-	@POST
+	
+	
+	
+	//***********************************************************************************************//
+
+	
+	
+	// delete ttd
+	@DELETE
 	@Path("{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Consumes({ MediaType.APPLICATION_JSON })
-	public Response updateSongs(String payload, @PathParam("id") int id) {
-		UpdateSongCommand update = new UpdateSongCommand();
-		Song s = null;
+	public Response delttd(String payload, @PathParam("id") int id) {
+		DeleteTTD del = new DeleteTTD();
+		
 		try {
-			s = mapper.readValue(payload, Song.class);
-			s.setId(id);
+			if(del.execute(id)){
+				return Response.status(200).build();
+			}else
+				Response.status(500).build();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			Response.status(400).entity("could not read string").build();
 		}
-		try {
-			update.execute(s);
-		} catch (Exception e) {
-			e.printStackTrace();
-			Response.status(500).build();
-		}
-		return Response.status(200).build();
+		
+		return Response.status(500).build();
 	}
-	// Delete a song
-	// Search songs
+	
+	
+	
+
 }
+
