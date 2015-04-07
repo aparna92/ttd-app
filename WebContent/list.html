@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
+</script>
+
+<script>
+//we are reusing this URL, somove it to a variable
+base_url="http://localhost:8080/rest/ttd/";
+
+
+
+$(document).ready(function(){
+	
+
+	 $.getJSON("http://localhost:8080/rest/ttd",function(data1){
+		 var foo = data1.data[0];
+		 var str = "title";
+		 var str2 = "des"
+			 var str3 = "del"
+			$.each( data1.data, function( count, object ) { 
+		    	console.log(object);
+	    		
+	    			$('#msg').append("<br><div "+"name="+str+">"+ object.title+"</div>"  );
+	    			$('#msg').append("<br><div "+"name="+str2+">"+ object.des+"</div>"  );
+	    			$('#msg').append("<button id = "+ object.id+"class="+str3+ "> DONE</div>"  );
+	    		
+	    	});
+		 
+	 });
+	
+	
+	
+
+    
+    $('#msg').submit(function(){
+    
+    	console.log($('.del').getElementById('.del').val());
+    	//delData($('.del').getElementById('.del').val());
+    	
+    	//setTimeout(function () { window.location.reload(); }, 10);
+   
+    	return false;
+    });
+    
+    
+    function delData(id){
+        $.ajax({
+                type: "DELETE",
+                url: "/rest/ttd"+id,
+                success: function (data, status, jqXHR) {
+                    alert("Deleted-Done with the task");
+                },
+                error: function (jqXHR, status) {
+                    console.log(jqXHR);
+                    alert('failed, please check console for errors');
+                }
+             });
+       }/*
+
+});
+
+</script>
+</head>
+<body>
+	<h1 style="text-align: center;">Enter things to do:</h1>
+	<div id="cemp_form" method="DELETE">
+				<div id="msg"></div>
+	</div>
+	<br>
+
+	
+
+</body>
+</html>
