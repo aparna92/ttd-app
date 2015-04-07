@@ -15,7 +15,7 @@ base_url="http://localhost:8080/rest/ttd/";
 $(document).ready(function(){
 	
 
-	 $.getJSON("http://localhost:8080/rest/ttd",function(data1){
+	 $.getJSON("/rest/ttd",function(data1){
 		 var foo = data1.data[0];
 		 var str = "title";
 		 var str2 = "des"
