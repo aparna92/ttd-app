@@ -26,7 +26,7 @@ $(document).ready(function(){
 	    		
 	    			$('#msg').append("<br><div "+"name="+str+">"+ object.title+"</div>"  );
 	    			$('#msg').append("<br><div "+"name="+str2+">"+ object.des+"</div>"  );
-	    			$('#msg').append("<button name = "+ object.id +" class="+str3+ "> DONE</button>"  );
+	    			$('#msg').append("<button value = "+ object.id +" class="+str3+ "> DONE</button>"  );
 	    		
 	    	});
 		 
@@ -39,6 +39,7 @@ $(document).ready(function(){
     $('#msg').click(function(){
     
     	console.log($('.del').val());
+    	console.log($('#msg').val());
     	//delData($('.del').getElementById('.del').val());
     	
     	//setTimeout(function () { window.location.reload(); }, 10);
@@ -68,7 +69,7 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-	<h1 style="text-align: center;">Enter things to do:</h1>
+	<h1 style="text-align: center;">Manage things to do:</h1>
 	<div id="cemp_form" method="DELETE">
 				<div id="msg"></div>
 	</div>
