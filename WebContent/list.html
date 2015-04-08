@@ -26,7 +26,7 @@ $(document).ready(function(){
 	    		
 	    			$('#msg').append("<br><div "+"name="+str+">"+ object.title+"</div>"  );
 	    			$('#msg').append("<br><div "+"name="+str2+">"+ object.des+"</div>"  );
-	    			$('#msg').append("<button value = "+ object.id +" class="+str3+ "> DONE</button>"  );
+	    			$('#msg').append("<button name = "+ object.id +" class="+str3+ "> DONE</button>"  );
 	    		
 	    	});
 		 
@@ -38,7 +38,7 @@ $(document).ready(function(){
     
     $('#msg').click(function(){
     
-    	console.log($('.del').val());
+    	console.log($('.del').name);
     	//delData($('.del').getElementById('.del').val());
     	
     	//setTimeout(function () { window.location.reload(); }, 10);
